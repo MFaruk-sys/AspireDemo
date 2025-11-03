@@ -1,0 +1,493 @@
+{
+    "info": {
+        "name": ".NET Aspire Microservices Demo",
+        "description": "API collection for testing ProductService and OrderService endpoints",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "variable": [
+        {
+            "key": "product_service_url",
+            "value": "http://localhost:{{product_service_port}}",
+            "type": "string"
+        },
+        {
+            "key": "order_service_url",
+            "value": "http://localhost:{{order_service_port}}",
+            "type": "string"
+        },
+        {
+            "key": "product_service_port",
+            "value": "5001",
+            "type": "string"
+        },
+        {
+            "key": "order_service_port",
+            "value": "5002",
+            "type": "string"
+        }
+    ],
+    "item": [
+        {
+            "name": "ProductService",
+            "item": [
+                {
+                    "name": "Get All Products",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{product_service_url}}/api/products",
+                            "host": [
+                                "{{product_service_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "products"
+                            ]
+                        },
+                        "description": "Retrieve all products from the ProductService"
+                    }
+                },
+                {
+                    "name": "Get Product by ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{product_service_url}}/api/products/1",
+                            "host": [
+                                "{{product_service_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "products",
+                                "1"
+                            ]
+                        },
+                        "description": "Retrieve a specific product by ID"
+                    }
+                },
+                {
+                    "name": "Create Product",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"Gaming Laptop\",\n  \"description\": \"High-performance gaming laptop with RTX 4070\",\n  \"price\": 2499.99,\n  \"stockQuantity\": 15\n}"
+                        },
+                        "url": {
+                            "raw": "{{product_service_url}}/api/products",
+                            "host": [
+                                "{{product_service_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "products"
+                            ]
+                        },
+                        "description": "Create a new product in the ProductService"
+                    }
+                },
+                {
+                    "name": "Update Product",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"Gaming Laptop Pro\",\n  \"description\": \"Updated high-performance gaming laptop with RTX 4080\",\n  \"price\": 2799.99,\n  \"stockQuantity\": 10\n}"
+                        },
+                        "url": {
+                            "raw": "{{product_service_url}}/api/products/1",
+                            "host": [
+                                "{{product_service_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "products",
+                                "1"
+                            ]
+                        },
+                        "description": "Update an existing product"
+                    }
+                },
+                {
+                    "name": "Delete Product",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                            "raw": "{{product_service_url}}/api/products/1",
+                            "host": [
+                                "{{product_service_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "products",
+                                "1"
+                            ]
+                        },
+                        "description": "Delete a product by ID"
+                    }
+                },
+                {
+                    "name": "Health Check",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{product_service_url}}/health",
+                            "host": [
+                                "{{product_service_url}}"
+                            ],
+                            "path": [
+                                "health"
+                            ]
+                        },
+                        "description": "Check ProductService health status"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "OrderService",
+            "item": [
+                {
+                    "name": "Get All Orders",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{order_service_url}}/api/orders",
+                            "host": [
+                                "{{order_service_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "orders"
+                            ]
+                        },
+                        "description": "Retrieve all orders with their items"
+                    }
+                },
+                {
+                    "name": "Get Order by ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{order_service_url}}/api/orders/1",
+                            "host": [
+                                "{{order_service_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "orders",
+                                "1"
+                            ]
+                        },
+                        "description": "Retrieve a specific order by ID"
+                    }
+                },
+                {
+                    "name": "Create Order (Validates Products)",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"customerName\": \"John Doe\",\n  \"customerEmail\": \"john.doe@example.com\",\n  \"items\": [\n    {\n      \"productId\": 1,\n      \"quantity\": 2\n    },\n    {\n      \"productId\": 2,\n      \"quantity\": 1\n    }\n  ]\n}"
+                        },
+                        "url": {
+                            "raw": "{{order_service_url}}/api/orders",
+                            "host": [
+                                "{{order_service_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "orders"
+                            ]
+                        },
+                        "description": "Create a new order. This will validate products exist by calling ProductService."
+                    }
+                },
+                {
+                    "name": "Create Order (Invalid Product)",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"customerName\": \"Jane Smith\",\n  \"customerEmail\": \"jane.smith@example.com\",\n  \"items\": [\n    {\n      \"productId\": 999,\n      \"quantity\": 1\n    }\n  ]\n}"
+                        },
+                        "url": {
+                            "raw": "{{order_service_url}}/api/orders",
+                            "host": [
+                                "{{order_service_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "orders"
+                            ]
+                        },
+                        "description": "Test error handling - this will fail because product ID 999 doesn't exist"
+                    }
+                },
+                {
+                    "name": "Update Order Status",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"status\": \"Shipped\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{order_service_url}}/api/orders/1/status",
+                            "host": [
+                                "{{order_service_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "orders",
+                                "1",
+                                "status"
+                            ]
+                        },
+                        "description": "Update the status of an existing order"
+                    }
+                },
+                {
+                    "name": "Delete Order",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                            "raw": "{{order_service_url}}/api/orders/1",
+                            "host": [
+                                "{{order_service_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "orders",
+                                "1"
+                            ]
+                        },
+                        "description": "Delete an order by ID"
+                    }
+                },
+                {
+                    "name": "Health Check",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{order_service_url}}/health",
+                            "host": [
+                                "{{order_service_url}}"
+                            ],
+                            "path": [
+                                "health"
+                            ]
+                        },
+                        "description": "Check OrderService health status"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Sample Workflow",
+            "item": [
+                {
+                    "name": "1. Create Product",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"Wireless Headphones\",\n  \"description\": \"Noise-cancelling wireless headphones\",\n  \"price\": 199.99,\n  \"stockQuantity\": 25\n}"
+                        },
+                        "url": {
+                            "raw": "{{product_service_url}}/api/products",
+                            "host": [
+                                "{{product_service_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "products"
+                            ]
+                        },
+                        "description": "Step 1: Create a product that we can reference in an order"
+                    }
+                },
+                {
+                    "name": "2. Create Another Product",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"USB-C Cable\",\n  \"description\": \"Fast charging USB-C cable\",\n  \"price\": 24.99,\n  \"stockQuantity\": 100\n}"
+                        },
+                        "url": {
+                            "raw": "{{product_service_url}}/api/products",
+                            "host": [
+                                "{{product_service_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "products"
+                            ]
+                        },
+                        "description": "Step 2: Create another product"
+                    }
+                },
+                {
+                    "name": "3. List All Products",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{product_service_url}}/api/products",
+                            "host": [
+                                "{{product_service_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "products"
+                            ]
+                        },
+                        "description": "Step 3: Verify products were created"
+                    }
+                },
+                {
+                    "name": "4. Create Order with Multiple Items",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"customerName\": \"Alice Johnson\",\n  \"customerEmail\": \"alice.johnson@example.com\",\n  \"items\": [\n    {\n      \"productId\": 1,\n      \"quantity\": 1\n    },\n    {\n      \"productId\": 2,\n      \"quantity\": 3\n    }\n  ]\n}"
+                        },
+                        "url": {
+                            "raw": "{{order_service_url}}/api/orders",
+                            "host": [
+                                "{{order_service_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "orders"
+                            ]
+                        },
+                        "description": "Step 4: Create an order that references the products (OrderService will call ProductService to validate)"
+                    }
+                },
+                {
+                    "name": "5. List All Orders",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{order_service_url}}/api/orders",
+                            "host": [
+                                "{{order_service_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "orders"
+                            ]
+                        },
+                        "description": "Step 5: Verify the order was created with product details"
+                    }
+                },
+                {
+                    "name": "6. Update Order Status",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"status\": \"Delivered\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{order_service_url}}/api/orders/1/status",
+                            "host": [
+                                "{{order_service_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "orders",
+                                "1",
+                                "status"
+                            ]
+                        },
+                        "description": "Step 6: Update the order status to completed"
+                    }
+                }
+            ]
+        }
+    ],
+    "event": [
+        {
+            "listen": "prerequest",
+            "script": {
+                "type": "text/javascript",
+                "exec": [
+                    "// Set dynamic ports based on environment",
+                    "if (pm.environment.get('product_service_port') === undefined) {",
+                    "    pm.environment.set('product_service_port', '5001');",
+                    "}",
+                    "if (pm.environment.get('order_service_port') === undefined) {",
+                    "    pm.environment.set('order_service_port', '5002');",
+                    "}"
+                ]
+            }
+        }
+    ]
+}
